@@ -1,29 +1,120 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title></title>
-  <style type="text/css">
-    h1 {
-      height: 90%;
-    }
-    body {
-      height: 100%;
-    }
-    iframe {
-      width: 100%;
-      height: 1000px;
-    }
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PDF Viewer</title>
+  </head>
+  <body>
+    <h1>Prueba 12</h1>
+    <div class="top-bar">
+      <button class="btn" id="prev-page">
+        Prev Page
+      </button>
+      <button class="btn" id="next-page">
+        Next Page
+      </button>
+      <span class="page-info">
+        Page <span id="page-num"></span> of <span id="page-count"></span>
+      </span>
+    </div>
 
-  </style>
-</head>
-<body>
+    <canvas id="pdf-render"></canvas>
 
-  <h1>Prueba pdf 11</h1>
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+    <script>
 
-  <iframe src="https://drive.google.com/viewerng/viewer?url=https://pdfobject.com/pdf/sample-3pp.pdf?pid=explorer&efh=false&a=v&chrome=false&embedded=true" width="400px" height="300px"  />
+const url = 'https://pdfobject.com/pdf/sample-3pp.pdf';
 
+let pdfDoc = null,
+  pageNum = 1,
+  pageIsRendering = false,
+  pageNumIsPending = null;
 
-  <script type="text/javascript"></script>
+const scale = 1.5,
+  canvas = document.querySelector('#pdf-render'),
+  ctx = canvas.getContext('2d');
 
-</body>
+// Render the page
+const renderPage = num => {
+  pageIsRendering = true;
+
+  // Get page
+  pdfDoc.getPage(num).then(page => {
+    // Set scale
+    const viewport = page.getViewport({ scale });
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+
+    const renderCtx = {
+      canvasContext: ctx,
+      viewport
+    };
+
+    page.render(renderCtx).promise.then(() => {
+      pageIsRendering = false;
+
+      if (pageNumIsPending !== null) {
+        renderPage(pageNumIsPending);
+        pageNumIsPending = null;
+      }
+    });
+
+    // Output current page
+    document.querySelector('#page-num').textContent = num;
+  });
+};
+
+// Check for pages rendering
+const queueRenderPage = num => {
+  if (pageIsRendering) {
+    pageNumIsPending = num;
+  } else {
+    renderPage(num);
+  }
+};
+
+// Show Prev Page
+const showPrevPage = () => {
+  if (pageNum <= 1) {
+    return;
+  }
+  pageNum--;
+  queueRenderPage(pageNum);
+};
+
+// Show Next Page
+const showNextPage = () => {
+  if (pageNum >= pdfDoc.numPages) {
+    return;
+  }
+  pageNum++;
+  queueRenderPage(pageNum);
+};
+
+// Get Document
+pdfjsLib
+  .getDocument(url)
+  .promise.then(pdfDoc_ => {
+    pdfDoc = pdfDoc_;
+
+    document.querySelector('#page-count').textContent = pdfDoc.numPages;
+
+    renderPage(pageNum);
+  })
+  .catch(err => {
+    // Display error
+    const div = document.createElement('div');
+    div.className = 'error';
+    div.appendChild(document.createTextNode(err.message));
+    document.querySelector('body').insertBefore(div, canvas);
+    // Remove top bar
+    document.querySelector('.top-bar').style.display = 'none';
+  });
+
+// Button Events
+document.querySelector('#prev-page').addEventListener('click', showPrevPage);
+document.querySelector('#next-page').addEventListener('click', showNextPage);
+
+    </script>
+  </body>
 </html>
