@@ -24,6 +24,7 @@ var userAgent = window.navigator.userAgent;
 var isSafariMobileCinco = userAgent.match(/iPad/i) || userAgent.match(/iPhone/i);
 var isSafariMobileSeis = userAgent.match(/iPad/i) || userAgent.match(/iPhone/i) || userAgent.match(/iPod/i);
 var userAgentLog = userAgent;
+var isSafariMobileSiete = userAgent.match(/AppleWebKit/) && !userAgent.match(/Chrome/);
 		
 // Internet Explorer 6-11
 var isIE = /*@cc_on!@*/false || !!document.documentMode;
@@ -38,7 +39,7 @@ var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.r
 var isBlink = (isChrome || isOpera) && !!window.CSS;
 
 
-var output = 'Prueba 8:<hr>';
+var output = 'Prueba 9:<hr>';
 output += 'isFirefox: ' + isFirefox + '<br>';
 output += 'isChrome: ' + isChrome + '<br>';
 output += 'isSafari: ' + isSafari + '<br>';
@@ -49,6 +50,7 @@ output += 'isSafariMobileCuatro: ' + isSafariMobileCuatro + '<br>';
 output += 'isSafariMobileCinco: ' + isSafariMobileCinco + '<br>';
 output += 'isSafariMobileSeis: ' + isSafariMobileSeis + '<br>';
 output += 'userAgentLog: ' + userAgentLog + '<br>';
+output += 'isSafariMobileSiete: ' + isSafariMobileSiete + '<br>';
 output += 'isOpera: ' + isOpera + '<br>';
 output += 'isIE: ' + isIE + '<br>';
 output += 'isEdge: ' + isEdge + '<br>';
