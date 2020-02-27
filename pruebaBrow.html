@@ -16,7 +16,8 @@ var isFirefox = typeof InstallTrigger !== 'undefined';
 // Safari 3.0+ "[object HTMLElementConstructor]" 
 var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
 
-var isSafariMobile = window.navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/);
+var isSafariMobile = window.navigator.userAgent.match(/(iPod|iPhone|iPad)/);
+		//&& navigator.userAgent.match(/AppleWebKit/);
 
 // Internet Explorer 6-11
 var isIE = /*@cc_on!@*/false || !!document.documentMode;
@@ -31,7 +32,7 @@ var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.r
 var isBlink = (isChrome || isOpera) && !!window.CSS;
 
 
-var output = 'Detecting browsers by ducktyping:<hr>';
+var output = 'Prueba 2:<hr>';
 output += 'isFirefox: ' + isFirefox + '<br>';
 output += 'isChrome: ' + isChrome + '<br>';
 output += 'isSafari: ' + isSafari + '<br>';
