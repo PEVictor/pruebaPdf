@@ -22,7 +22,7 @@ var isSafariMobileTres = navigator.userAgent.match(/(iPod|iPhone|iPad)/);
 var isSafariMobileCuatro = navigator.userAgent.match(/AppleWebKit/);
 var userAgent = window.navigator.userAgent;
 var isSafariMobileCinco = userAgent.match(/iPad/i) || userAgent.match(/iPhone/i);
-var isSafariMobileSeis = userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)) || userAgent.match(/iPod/i);
+var isSafariMobileSeis = userAgent.match(/iPad/i) || userAgent.match(/iPhone/i) || userAgent.match(/iPod/i);
 var userAgentLog = userAgent;
 		
 // Internet Explorer 6-11
@@ -38,7 +38,7 @@ var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.r
 var isBlink = (isChrome || isOpera) && !!window.CSS;
 
 
-var output = 'Prueba 7:<hr>';
+var output = 'Prueba 8:<hr>';
 output += 'isFirefox: ' + isFirefox + '<br>';
 output += 'isChrome: ' + isChrome + '<br>';
 output += 'isSafari: ' + isSafari + '<br>';
